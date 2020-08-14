@@ -1,34 +1,46 @@
 <template>
   <div>
-    <Nuxt />
+    <Navigation />
+    <Nuxt class="main" />
   </div>
 </template>
 
+<script>
+import Navigation from "../components/Navigation";
+export default {
+  components: {
+    Navigation: Navigation
+  }
+}
+</script>
+
 <style>
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  font-size: 16px;
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 62.5%;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
+.main {
+  min-height: 91vh;
+}
+
+button,
+a {
+  font-size: 1.6rem;
 }
 
 .button--green {
@@ -58,5 +70,15 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 2rem;
+}
+
+.main {
 }
 </style>
