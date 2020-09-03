@@ -9,9 +9,9 @@
 import Navigation from "../components/Navigation";
 export default {
   components: {
-    Navigation: Navigation
-  }
-}
+    Navigation: Navigation,
+  },
+};
 </script>
 
 <style>
@@ -35,7 +35,8 @@ html {
 }
 
 .main {
-  min-height: 91vh;
+  /* height: calc(100% - 7.5rem); //NOT WORKING: */
+  height: 90vh;
 }
 
 button,
@@ -77,8 +78,5 @@ a {
   top: 0;
   left: 0;
   padding: 2rem;
-}
-
-.main {
 }
 </style>

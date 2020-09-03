@@ -1,6 +1,8 @@
 <template>
   <nav class="navigation">
-    <Pokeball />
+    <nuxt-link to="/">
+      <Pokeball />
+    </nuxt-link>
     <ul class="navigation__list">
       <li class="navigation__list--item">
         <nuxt-link to="/about">About</nuxt-link>
@@ -18,10 +20,10 @@
 <script>
 import Pokeball from "./shared/Pokeball";
 export default {
-    components: {
-        Pokeball: Pokeball
-    }
-}
+  components: {
+    Pokeball: Pokeball,
+  },
+};
 </script>
 
 <style>
@@ -31,7 +33,7 @@ export default {
   align-items: center;
   padding: 0 2rem;
   width: 100%;
-  height: 9vh;
+  height: 7.5rem;
   /* background-color: #42b883; */
 }
 
