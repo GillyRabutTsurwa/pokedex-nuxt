@@ -49,7 +49,7 @@ export default {
 .navigation__list--item a:link,
 .navigation__list--item a:visited {
   text-decoration: none;
-  color: #0e515a;
+  color: #e2f7fa;
   text-transform: uppercase;
   font-size: 1.8rem;
   font-size: bold;
@@ -61,6 +61,6 @@ export default {
 
 .navigation__list--item a:hover,
 .navigation__list--item a:active {
-  border-bottom: 2px solid #0e515a;
+  border-bottom: 2px solid #e2f7fa;
 }
 </style>

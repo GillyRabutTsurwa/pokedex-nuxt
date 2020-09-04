@@ -1,13 +1,18 @@
 <template>
-  <div>
-    <h4>Pokedex will go here</h4>
-    <div v-for="(currentPokemon, index) in pokemonList" v-bind:key="index">{{currentPokemon.name}}</div>
+  <div class="pokecard-container">
+    <Pokecard v-for="(currentPokemon, index) in pokemonList" v-bind:key="index" v-bind:pokemonObj="currentPokemon" />
   </div>
 </template>
 
 <script>
 import axios from "@nuxtjs/axios";
+import Pokecard from "~/components/Pokecard";
+
 export default {
+  name: "Pokedex",
+  components: {
+    Pokecard: Pokecard,
+  },
   data() {
     return {
       pokemonList: [],
@@ -37,5 +42,13 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.pokecard-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 27.5rem));
+  gap: 2rem;
+  justify-content: center;
+
+  margin: 0 1.5rem;
+}
 </style>  
