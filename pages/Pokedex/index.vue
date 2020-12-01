@@ -1,6 +1,7 @@
 <template>
   <div class="pokecard-container">
-    <Pokecard v-for="(currentPokemon, index) in pokemonList" v-bind:key="index" v-bind:pokemonObj="currentPokemon" />
+    <h4 v-if="loading">Loading Pokemon</h4>
+    <Pokecard v-else v-for="(currentPokemon, index) in pokemonList" v-bind:key="index" v-bind:pokemonObj="currentPokemon" />
   </div>
 </template>
 
@@ -16,6 +17,8 @@ export default {
   data() {
     return {
       pokemonList: [],
+      //NEW:
+      loading: false,
     };
   },
   methods: {
@@ -24,20 +27,19 @@ export default {
         const response = await this.$axios.$get(
           `https://pokeapi.co/api/v2/pokemon/${iterator}`
         );
-        // console.log(response);
         return response;
-        // console.log(response.name);
       } catch (error) {
         console.log(error);
       }
     },
   },
   async created() {
+    this.loading = true;
     for (let i = 1; i <= 150; i++) {
-      //NOTE: I see, I needed to consume the promise in the function call as well. See await keyword in line below.
       this.pokemonList.push(await this.promiseFunc(i));
     }
     console.log(this.pokemonList);
+    this.loading = false;
   },
 };
 </script>
