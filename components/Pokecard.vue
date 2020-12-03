@@ -4,6 +4,10 @@
     <div class="pokecard__image-container">
       <img v-bind:src="pokemonObj.sprites.front_default" alt="Pokeking">
     </div>
+    <!-- NOTE: I may make custom buttons later on -->
+    <a href="https://nuxtjs.org/" target="_blank" rel="noopener noreferrer" class="button--green">
+      More Info
+    </a>
   </div>
 </template>
 
@@ -25,6 +29,7 @@ export default {
   text-align: center;
   background-color: #fff;
   border-radius: 3px;
+  padding-bottom: 3.25rem;
 
   &__title {
     font-size: 2rem;
