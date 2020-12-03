@@ -1,7 +1,6 @@
 <template>
   <div class="pokecard-container">
-    <h4 v-if="loading">Loading Pokemon</h4>
-    <Pokecard v-else v-for="(currentPokemon, index) in pokemonList" v-bind:key="index" v-bind:pokemonObj="currentPokemon" />
+    <Pokecard v-for="(currentPokemon, index) in pokemonList" v-bind:key="index" v-bind:pokemonObj="currentPokemon" />
   </div>
 </template>
 
@@ -17,8 +16,6 @@ export default {
   data() {
     return {
       pokemonList: [],
-      //NEW:
-      loading: false,
     };
   },
   methods: {
@@ -34,12 +31,10 @@ export default {
     },
   },
   async created() {
-    this.loading = true;
     for (let i = 1; i <= 150; i++) {
       this.pokemonList.push(await this.promiseFunc(i));
     }
     console.log(this.pokemonList);
-    this.loading = false;
   },
 };
 </script>
@@ -48,6 +43,7 @@ export default {
 .pokecard-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(25rem, 27.5rem));
+  // So I don't know what I like better: 27.5rem for the largest possible unit of 1fr. Je vais decider plus tard
   gap: 2rem;
   justify-content: center;
 
