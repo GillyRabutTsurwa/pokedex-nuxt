@@ -4,7 +4,8 @@
     <div class="pokecard__image-container">
       <img v-bind:src="pokemonObj.sprites.front_default" alt="Pokeking">
     </div>
-    <nuxt-link v-bind:to="`/pokedex/${pokemonObj.name}`">{{pokemonObj.name}}</nuxt-link>
+    <nuxt-link v-bind:to="`/pokedex/${pokemonObj.name}`" class="button--green">More Info
+    </nuxt-link>
   </div>
 </template>
 
@@ -26,6 +27,7 @@ export default {
   text-align: center;
   background-color: #fff;
   border-radius: 3px;
+  padding-bottom: 3.5rem;
 
   &__title {
     font-size: 2rem;
