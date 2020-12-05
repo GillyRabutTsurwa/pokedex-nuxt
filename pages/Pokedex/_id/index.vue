@@ -21,7 +21,8 @@
     </div>
 
     <div class="about-pokemon__moves">
-      <h3 class="about-pokemon__moves--title">Top {{moves.length}} Moves</h3>
+      <h3 v-if="moves.length >= 20" class="about-pokemon__moves--title">Top {{moves.length}} Moves</h3>
+      <h3 v-else>Top Moves</h3>
       <ul class="about-pokemon__moves--list">
         <li v-for="currentMove in moves" v-bind:key="currentMove">
           {{currentMove}}
