@@ -18,6 +18,9 @@ export default {
       required: true,
     },
   },
+  created() {
+    console.log(this.pokemonObj);
+  },
 };
 </script>
 
