@@ -22,11 +22,11 @@ export default {
   },
   methods: {
     async promiseFunc(iterator) {
+      const URL = "https://pokeapi.co/api/v2/pokemon";
       try {
-        const response = await this.$axios.$get(
-          `https://pokeapi.co/api/v2/pokemon/${iterator}`
-        );
-        return response;
+        const response = await this.$axios.get(`${URL}/${iterator}`);
+        const data = response.data;
+        return data;
       } catch (error) {
         console.log(error);
       }
