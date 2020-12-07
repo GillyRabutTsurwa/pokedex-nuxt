@@ -63,27 +63,21 @@ export default {
     // console.log(response);
     const data = response.data;
     console.log(data);
-
     const pokemonAbilities = data.abilities;
     console.log(pokemonAbilities);
-
     this.abilities = pokemonAbilities.map(
       (currentAbilityObj) => currentAbilityObj.ability.name
     );
-
     console.log(this.abilities);
-
     //moves
     const pokemonMoves = data.moves;
     console.log(pokemonMoves);
     this.moves = pokemonMoves
       .slice(0, 20)
       .map((currentMoveObj) => currentMoveObj.move.name);
-
     // type
     const pokemonTypes = data.types;
     this.types = pokemonTypes.map((currentTypeObj) => currentTypeObj.type.name);
-
     // stats. I will use this somehow with chart.js
     const pokemonStats = data.stats;
     this.stats = pokemonStats.map((currentStatsObj) => [
@@ -91,20 +85,16 @@ export default {
       currentStatsObj.base_stat,
     ]);
     console.log(this.stats);
-
     const statTypes = this.stats.map((currentStatsArr) => {
       return currentStatsArr[0];
     });
-
     const statFigures = this.stats.map((currentStatsArr) => {
       return currentStatsArr[1];
     });
-
     console.log(statTypes);
     this.statTypes = statTypes;
     console.log(statFigures);
     this.statFigures = statFigures;
-
     const chart = document.getElementById("pokeChart").getContext("2d");
     let myChart = new Chart(chart, {
       type: "doughnut", // i apparently doughnut works fine
@@ -169,16 +159,13 @@ export default {
   //TESTING:
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-
   // this will select all elements inside the .about-pokemon element, the main parent element that have the class title included in the class name
   & [class*="title"] {
     text-transform: uppercase;
   }
-
   ul {
     list-style: none;
   }
-
   &__title {
     font-size: 3.5rem;
     text-align: center;
@@ -187,17 +174,14 @@ export default {
     letter-spacing: 0.25rem;
     grid-column: 1 / -1;
   }
-
   &__ability {
     &--list {
       // list-style: none;
     }
   }
-
   &__stats {
     .chart-container {
       width: 100%;
-
       #pokeChart {
         // width: 100%;
         // height: 100%;

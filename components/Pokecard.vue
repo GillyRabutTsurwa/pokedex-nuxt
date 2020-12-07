@@ -31,19 +31,16 @@ export default {
   background-color: #fff;
   border-radius: 3px;
   padding-bottom: 3.5rem;
-
   &__title {
     font-size: 2rem;
     text-transform: uppercase;
     margin-top: 2rem;
     letter-spacing: 5px;
   }
-
   &__image-container {
     background-color: #eceff1;
     height: 25rem;
     margin: 2rem;
-
     & img {
       width: 80%;
       height: 80%;
