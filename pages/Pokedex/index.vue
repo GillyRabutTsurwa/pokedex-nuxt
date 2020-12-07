@@ -66,7 +66,7 @@ export default {
 }
 
 .spinnin {
-  animation: spin 1.25s linear infinite; // linear is a value for what property again?
+  animation: spin 1.25s linear infinite; // linear is a value for what property again? mmmm.
 }
 
 @keyframes spin {
