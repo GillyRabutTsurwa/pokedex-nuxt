@@ -5,6 +5,9 @@
       <h1 class="title">
         pokedex-app
       </h1>
+      <span v-for="(currentPokemon, index) in pokemonList" v-bind:key="index">
+        {{currentPokemon}}
+      </span>
       <div class="links">
         <a href="https://nuxtjs.org/" target="_blank" rel="noopener noreferrer" class="button--green">
           Documentation
@@ -18,7 +21,35 @@
 </template>
 
 <script>
-export default {};
+import axios from "@nuxtjs/axios";
+export default {
+  data() {
+    return {
+      pokemonList: []
+    }
+  },
+  methods: {
+    async promiseFunc(iterator) {
+      try {
+        const response = await this.$axios.$get(
+          `https://pokeapi.co/api/v2/pokemon/${iterator}`
+        );
+        return response;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+     async created() {
+    for (let i = 1; i <= 150; i++) {
+      this.pokemonList.push(await this.promiseFunc(i));
+    }
+    console.log(this.pokemonList);
+  },
+  mounted() {
+    console.log(this.pokemonList)
+  }
+};
 </script>
 
 <style>
@@ -48,5 +79,10 @@ export default {};
 }
 .links {
   padding-top: 15px;
+}
+
+/* TESTING: */
+span {
+  color:white;
 }
 </style>
