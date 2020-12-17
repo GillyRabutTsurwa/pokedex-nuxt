@@ -2,6 +2,8 @@
   <div class="about-pokemon">
     <h2 class="about-pokemon__title">About {{name}}</h2>
 
+    <img v-bind:src="imgURL" alt="name">
+
     <div class="about-pokemon__types">
       <h3 class="about-pokemon__types--title">Types</h3>
       <ul class="about-pokemon__moves--list">
@@ -48,6 +50,7 @@ export default {
       abilities: [],
       moves: [],
       types: [],
+      imgURL: "",
       //TESTING
       stats: [],
       statTypes: [],
@@ -63,6 +66,14 @@ export default {
     // console.log(response);
     const data = response.data;
     console.log(data);
+
+    const id = data.id;
+    console.log(id);
+
+    const imgURL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+
+    this.imgURL = imgURL;
+
     const pokemonAbilities = data.abilities;
     console.log(pokemonAbilities);
     this.abilities = pokemonAbilities.map(

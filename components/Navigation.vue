@@ -1,7 +1,7 @@
 <template>
   <nav class="navigation">
     <nuxt-link to="/">
-      <Pokeball />
+      <Logo class="navigation__logo" />
     </nuxt-link>
     <ul class="navigation__list">
       <li class="navigation__list--item">
@@ -35,6 +35,11 @@ export default {
   width: 100%;
   height: 7.5rem;
   /* background-color: #42b883; */
+}
+
+.navigation__logo {
+  width: 20rem;
+  height: 20rem;
 }
 
 .navigation__list {
