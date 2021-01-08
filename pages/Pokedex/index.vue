@@ -41,8 +41,8 @@ export default {
     for (let i = 1; i <= 150; i++) {
       this.pokemonList.push(await this.promiseFunc(i));
     }
-    console.log(this.pokemonList);
-    //NOTE: after we've fethe all the pokemon, then we set loading to false, which will make the loader stop and the pokecards will render
+    // console.log(this.pokemonList);
+    // //NOTE: after we've fethe all the pokemon, then we set loading to false, which will make the loader stop and the pokecards will render
     this.loading = false;
   },
 };

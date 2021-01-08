@@ -1,15 +1,24 @@
 <template>
   <div>
-    <Navigation />
+    <!-- Show navigation except in the single pokemon info page route -->
+    <!-- <Navigation v-if="routeName !== 'Pokedex-id'" /> -->
     <Nuxt class="main" />
   </div>
 </template>
 
 <script>
-import Navigation from "../components/Navigation";
+// import Navigation from "../components/Navigation";
 export default {
+  data() {
+    return {
+      routeName: this.$route.name,
+    };
+  },
   components: {
-    Navigation: Navigation,
+    // Navigation: Navigation,
+  },
+  mounted() {
+    console.log(this.routeName);
   },
 };
 </script>
