@@ -98,6 +98,14 @@ export default {
         colorThief.getColor(img);
       }
     },
+    //NEW: refactoring the code; all those functions in the created hook
+    //NOTE: Still in progress
+    fetchAndSiftData(dataArr, currentDataIteration) {
+      const dataResult = dataArr.map(
+        (currentDataIteration) => currentDataIteration[attribute1][attribute2]
+      );
+      return dataResult;
+    },
   },
   computed: {
     typeSubtitle() {
@@ -130,12 +138,15 @@ export default {
     this.imgURL = imgURL;
 
     // des competences (abilities)
+    //TESTING:
     const pokemonAbilities = data.abilities;
-    console.log(pokemonAbilities);
-    this.abilities = pokemonAbilities.map(
-      (currentAbilityObj) => currentAbilityObj.ability.name
-    );
-    console.log(this.abilities);
+    // console.log(pokemonAbilities);
+    // this.abilities = pokemonAbilities.map(
+    //   (currentAbilityObj) => currentAbilityObj.ability.name
+    // );
+    // console.log(this.abilities);
+    //NOTE: Je m'en occupe toujourts
+    fetchAndSiftData(pokemonAbilities);
 
     //des gestes (moves)
     const pokemonMoves = data.moves;
