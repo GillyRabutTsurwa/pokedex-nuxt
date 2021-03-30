@@ -4,8 +4,8 @@
     <div class="pokecard__image-container">
       <img v-bind:src="pokemonObj.sprites.front_default" alt="Pokeking">
     </div>
-    <nuxt-link v-bind:to="`/pokedex/${pokemonObj.name}`" class="button--green">More Info
-    </nuxt-link>
+    <NuxtLink v-bind:to="`/pokedex/${pokemonObj.name}`" class="button--green">More Info
+    </NuxtLink>
   </div>
 </template>
 

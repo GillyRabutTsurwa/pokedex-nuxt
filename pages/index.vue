@@ -13,6 +13,9 @@
           <a href="https://github.com/nuxt/nuxt.js" target="_blank" rel="noopener noreferrer" class="button--grey">
             GitHub
           </a>
+          <NuxtLink to="/pokedex" target="_blank" class="button--pokedex">
+            Pokedex
+          </NuxtLink>
         </div>
       </div>
     </div>
@@ -64,7 +67,8 @@ export default {
   },
   async created() {
     this.loading = true;
-    for (let i = 1; i < 150; i++) {
+    const pokemonListLimit = 150;
+    for (let i = 1; i < pokemonListLimit; i++) {
       this.pokemonImages.push(await this.promiseFunc(i));
     }
     console.dir(this.pokemonImages);
@@ -103,29 +107,5 @@ export default {
 .home-page-image img {
   width: 100%;
   height: 100%;
-}
-.title {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-.links {
-  padding-top: 15px;
-}
-
-/* TESTING: */
-span {
-  color: white;
 }
 </style>

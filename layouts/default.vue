@@ -58,18 +58,26 @@ body {
   height: 90vh;
 }
 
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 2rem;
+}
+
 button,
 a {
+  display: inline-block;
+  padding: 1rem 3rem;
   font-size: 1.6rem;
+  text-decoration: none;
+  border-radius: 4px;
 }
 
 .button--green {
-  display: inline-block;
-  border-radius: 4px;
   border: 1px solid #3b8070;
   color: #3b8070;
   text-decoration: none;
-  padding: 10px 30px;
 }
 
 .button--green:hover {
@@ -78,12 +86,8 @@ a {
 }
 
 .button--grey {
-  display: inline-block;
-  border-radius: 4px;
   border: 1px solid #35495e;
   color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
   margin-left: 15px;
 }
 
@@ -92,10 +96,13 @@ a {
   background-color: #35495e;
 }
 
-.fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 2rem;
+.button--pokedex {
+  background-color: #333;
+  color: rgb(230, 189, 86);
+}
+
+.button--pokedex:hover {
+  background-color: rgb(230, 189, 86);
+  color: #333;
 }
 </style>
