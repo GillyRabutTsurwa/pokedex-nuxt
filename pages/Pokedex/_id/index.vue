@@ -99,8 +99,66 @@ export default {
       }
     },
 
-    testMapRefactor(arr) {
-      return arr.map((currentObj) => currentObj[property1][property2]);
+    // renderAbilities(currentObj, x, y) {
+    //   return currentObj[x][y];
+    // },
+
+    async renderPokemonData() {
+      const pokemonName = this.$route.params.id;
+      console.log(this.$route.params.id);
+      const URL = "https://pokeapi.co/api/v2/pokemon";
+      const response = await this.$axios.get(`${URL}/${pokemonName}`);
+
+      const data = response.data;
+      console.log(data);
+
+      const id = data.id;
+      console.log(id);
+
+      const imgURL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+      this.imgURL = imgURL;
+
+      const pokemonAbilities = data.abilities;
+      console.log(pokemonAbilities);
+      this.abilities = pokemonAbilities.map(
+        (currentAbilityObj) => currentAbilityObj.ability.name
+      );
+      // this.abilities = this.renderAbilities("ability", "name");
+      console.log(this.abilities);
+
+      const pokemonMoves = data.moves;
+      console.log(pokemonMoves);
+      this.moves = pokemonMoves
+        .slice(0, 20)
+        .map((currentMoveObj) => currentMoveObj.move.name);
+
+      const pokemonTypes = data.types;
+      this.types = pokemonTypes.map(
+        (currentTypeObj) => currentTypeObj.type.name
+      );
+      console.log(this.types);
+
+      const pokemonStats = data.stats;
+      this.stats = pokemonStats.map((currentStatsObj) => [
+        currentStatsObj.stat.name,
+        currentStatsObj.base_stat,
+      ]);
+
+      console.log(this.stats);
+      const statTypes = this.stats.map((currentStatsArr) => {
+        return currentStatsArr[0];
+      });
+
+      const statFigures = this.stats.map((currentStatsArr) => {
+        return currentStatsArr[1];
+      });
+
+      console.log(statTypes);
+      this.statTypes = statTypes;
+      console.log(statFigures);
+      this.statFigures = statFigures;
+
+      this.createChart(statTypes, statFigures);
     },
 
     createChart(statTypes, statFigures) {
@@ -144,64 +202,11 @@ export default {
     },
   },
   // NOTETODO: Too much code in this created hook. will need to refactor this and break code up into functions
-  async created() {
-    const pokemonName = this.$route.params.id;
-    console.log(this.$route.params.id);
-    const URL = "https://pokeapi.co/api/v2/pokemon";
-    const response = await this.$axios.get(`${URL}/${pokemonName}`);
-
-    const data = response.data;
-    console.log(data);
-
-    const id = data.id;
-    console.log(id);
-
-    const imgURL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-    this.imgURL = imgURL;
-
-    //TESTING:
-    const pokemonAbilities = data.abilities;
-    console.log(pokemonAbilities);
-    // this.abilities = pokemonAbilities.map(
-    //   (currentAbilityObj) => currentAbilityObj.ability.name
-    // );
-    this.abilities = this.testMapRefactor(pokemonAbilities);
-    console.log(this.abilities);
-
-    const pokemonMoves = data.moves;
-    console.log(pokemonMoves);
-    this.moves = pokemonMoves
-      .slice(0, 20)
-      .map((currentMoveObj) => currentMoveObj.move.name);
-
-    const pokemonTypes = data.types;
-    this.types = pokemonTypes.map((currentTypeObj) => currentTypeObj.type.name);
-    console.log(this.types);
-
-    const pokemonStats = data.stats;
-    this.stats = pokemonStats.map((currentStatsObj) => [
-      currentStatsObj.stat.name,
-      currentStatsObj.base_stat,
-    ]);
-
-    console.log(this.stats);
-    const statTypes = this.stats.map((currentStatsArr) => {
-      return currentStatsArr[0];
-    });
-
-    const statFigures = this.stats.map((currentStatsArr) => {
-      return currentStatsArr[1];
-    });
-
-    console.log(statTypes);
-    this.statTypes = statTypes;
-    console.log(statFigures);
-    this.statFigures = statFigures;
-
-    this.createChart(statTypes, statFigures);
-  },
-  mounted() {
-    console.log(document);
+  // async created() {
+  //   await this.renderPokemonData();
+  // },
+  async mounted() {
+    await this.renderPokemonData();
   },
 };
 </script>
