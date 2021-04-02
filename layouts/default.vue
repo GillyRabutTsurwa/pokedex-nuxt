@@ -54,8 +54,8 @@ body {
 }
 
 .main {
-  /* height: calc(100% - 7.5rem); //NOT WORKING: */
   height: 90vh;
+  padding: 5rem 0;
 }
 
 .fixed {

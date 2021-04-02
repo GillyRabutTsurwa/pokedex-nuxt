@@ -99,10 +99,6 @@ export default {
       }
     },
 
-    // renderAbilities(currentObj, x, y) {
-    //   return currentObj[x][y];
-    // },
-
     async renderPokemonData() {
       const pokemonName = this.$route.params.id;
       console.log(this.$route.params.id);
@@ -123,7 +119,6 @@ export default {
       this.abilities = pokemonAbilities.map(
         (currentAbilityObj) => currentAbilityObj.ability.name
       );
-      // this.abilities = this.renderAbilities("ability", "name");
       console.log(this.abilities);
 
       const pokemonMoves = data.moves;
@@ -143,8 +138,9 @@ export default {
         currentStatsObj.stat.name,
         currentStatsObj.base_stat,
       ]);
-
       console.log(this.stats);
+
+      //TESTING:
       const statTypes = this.stats.map((currentStatsArr) => {
         return currentStatsArr[0];
       });
@@ -152,6 +148,9 @@ export default {
       const statFigures = this.stats.map((currentStatsArr) => {
         return currentStatsArr[1];
       });
+
+      console.log(statTypes);
+      console.log(statFigures);
 
       console.log(statTypes);
       this.statTypes = statTypes;
@@ -201,12 +200,12 @@ export default {
         : "Top Moves";
     },
   },
-  // NOTETODO: Too much code in this created hook. will need to refactor this and break code up into functions
-  // async created() {
-  //   await this.renderPokemonData();
-  // },
-  async mounted() {
+
+  async created() {
+    console.time("test");
     await this.renderPokemonData();
+    console.timeEnd("test");
+    console.log("GILBERT IS A BOSS");
   },
 };
 </script>

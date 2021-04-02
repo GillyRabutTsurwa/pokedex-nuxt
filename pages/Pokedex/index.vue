@@ -1,5 +1,5 @@
 <template>
-  <div class="pokecard-container">
+  <div v-bind:class="{'container-on-load': loading, 'container-after-load': !loading}" class="pokecard-container">
     <!-- NEW: The pokeball spins while we're fetching Pokemon from the API -->
     <Pokeball v-if="loading" class="lg spinnin" />
     <Pokecard v-else v-for="(currentPokemon, index) in pokemonList" v-bind:key="index" v-bind:pokemonObj="currentPokemon" />
@@ -50,12 +50,8 @@ export default {
 
 <style lang="scss">
 .pokecard-container {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25rem, 27.5rem));
-  gap: 2rem;
-  justify-content: center;
   margin: 0 1.5rem;
+  width: 100%;
 }
 .lg {
   width: 50rem;
@@ -71,5 +67,22 @@ export default {
   to {
     transform: rotate(360deg);
   }
+}
+
+// dynamic classes
+.container-on-load {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.container-after-load {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 27.5rem));
+  gap: 2rem;
+  justify-content: center;
+  min-height: 100vh;
 }
 </style>
