@@ -74,7 +74,7 @@ export default {
       moves: [],
       types: [],
       imgURL: "",
-      //TESTING
+
       stats: [],
       statTypes: [],
       statFigures: [],
@@ -98,13 +98,39 @@ export default {
         colorThief.getColor(img);
       }
     },
-    //NEW: refactoring the code; all those functions in the created hook
-    //NOTE: Still in progress
-    fetchAndSiftData(dataArr, currentDataIteration) {
-      const dataResult = dataArr.map(
-        (currentDataIteration) => currentDataIteration[attribute1][attribute2]
-      );
-      return dataResult;
+
+    testMapRefactor(arr) {
+      return arr.map((currentObj) => currentObj[property1][property2]);
+    },
+
+    createChart(statTypes, statFigures) {
+      const chart = document.getElementById("pokeChart").getContext("2d");
+      let myChart = new Chart(chart, {
+        type: "doughnut",
+        data: {
+          labels: statTypes,
+          datasets: [
+            {
+              data: statFigures,
+              backgroundColor: [
+                "rgb(255, 99, 132)",
+                "rgb(54, 162, 235)",
+                "rgb(255, 206, 86)",
+                "rgb(2, 100, 255)",
+                "rgb(235, 162, 189)",
+                "rgb(55, 206, 186)",
+              ],
+            },
+          ],
+        },
+        options: {
+          legend: {
+            labels: {
+              fontColor: "#FFF",
+            },
+          },
+        },
+      });
     },
   },
   computed: {
@@ -119,95 +145,61 @@ export default {
   },
   // NOTETODO: Too much code in this created hook. will need to refactor this and break code up into functions
   async created() {
-    // NOTE: making an axios HTTP request for each single pokemon using its name (of which we are getting from Pokecard.vue as a route parametre)
     const pokemonName = this.$route.params.id;
     console.log(this.$route.params.id);
     const URL = "https://pokeapi.co/api/v2/pokemon";
     const response = await this.$axios.get(`${URL}/${pokemonName}`);
-    // NOTEIMPORTANT: the data from the fetch has plenty of information: voici ce dont j'ai besoin:
-    // console.log(response);
+
     const data = response.data;
     console.log(data);
 
-    // j'ai besoin du chiffre d'identité (ID)
     const id = data.id;
     console.log(id);
 
-    // j'en ai besoin pour créer l'image particulière pour chaque pokemon. c'est bon que j'ai vu ce code. je me demandais pourquoi j'avais besoin de l'ID
     const imgURL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
     this.imgURL = imgURL;
 
-    // des competences (abilities)
     //TESTING:
     const pokemonAbilities = data.abilities;
-    // console.log(pokemonAbilities);
+    console.log(pokemonAbilities);
     // this.abilities = pokemonAbilities.map(
     //   (currentAbilityObj) => currentAbilityObj.ability.name
     // );
-    // console.log(this.abilities);
-    //NOTE: Je m'en occupe toujourts
-    fetchAndSiftData(pokemonAbilities);
+    this.abilities = this.testMapRefactor(pokemonAbilities);
+    console.log(this.abilities);
 
-    //des gestes (moves)
     const pokemonMoves = data.moves;
     console.log(pokemonMoves);
     this.moves = pokemonMoves
       .slice(0, 20)
       .map((currentMoveObj) => currentMoveObj.move.name);
 
-    // un type (ou des types) de chaque pokemon
     const pokemonTypes = data.types;
     this.types = pokemonTypes.map((currentTypeObj) => currentTypeObj.type.name);
     console.log(this.types);
 
-    // les statistiques. ici il devienne plus compliqué, de plus parce que j'utilise chart.js pour afficher les données
     const pokemonStats = data.stats;
     this.stats = pokemonStats.map((currentStatsObj) => [
       currentStatsObj.stat.name,
       currentStatsObj.base_stat,
     ]);
+
     console.log(this.stats);
     const statTypes = this.stats.map((currentStatsArr) => {
       return currentStatsArr[0];
     });
+
     const statFigures = this.stats.map((currentStatsArr) => {
       return currentStatsArr[1];
     });
+
     console.log(statTypes);
     this.statTypes = statTypes;
     console.log(statFigures);
     this.statFigures = statFigures;
 
-    // création de chart.js
-    const chart = document.getElementById("pokeChart").getContext("2d");
-    let myChart = new Chart(chart, {
-      type: "doughnut", // apparently doughnut works fine
-      data: {
-        labels: this.statTypes,
-        datasets: [
-          {
-            data: this.statFigures,
-            backgroundColor: [
-              "rgb(255, 99, 132)",
-              "rgb(54, 162, 235)",
-              "rgb(255, 206, 86)",
-              "rgb(2, 100, 255)",
-              "rgb(235, 162, 189)",
-              "rgb(55, 206, 186)",
-            ],
-          },
-        ],
-      },
-      options: {
-        legend: {
-          labels: {
-            fontColor: "#FFF", // changing the colour of legend labels. PASS
-          },
-        },
-      },
-    });
+    this.createChart(statTypes, statFigures);
   },
-  // TESTING:
   mounted() {
     console.log(document);
   },
@@ -228,11 +220,10 @@ export default {
   color: aliceblue;
   margin: 0 5rem;
   font-size: 1.4rem;
-  //TESTING:
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   row-gap: 1.5rem;
-  // this will select all elements inside the .about-pokemon element, the main parent element that have the class title included in the class name
+
   & [class*="title"] {
     text-transform: uppercase;
   }
