@@ -98,6 +98,7 @@ export default {
         colorThief.getColor(img);
       }
     },
+<<<<<<< HEAD
 
     // renderAbilities(currentObj, x, y) {
     //   return currentObj[x][y];
@@ -190,6 +191,8 @@ export default {
         },
       });
     },
+=======
+>>>>>>> parent of 322ec8a... j'ai pas fini, mais pour le soir, c'est terminé
   },
   computed: {
     typeSubtitle() {
@@ -202,11 +205,103 @@ export default {
     },
   },
   // NOTETODO: Too much code in this created hook. will need to refactor this and break code up into functions
+<<<<<<< HEAD
   // async created() {
   //   await this.renderPokemonData();
   // },
   async mounted() {
     await this.renderPokemonData();
+=======
+  async created() {
+    // NOTE: making an axios HTTP request for each single pokemon using its name (of which we are getting from Pokecard.vue as a route parametre)
+    const pokemonName = this.$route.params.id;
+    console.log(this.$route.params.id);
+    const URL = "https://pokeapi.co/api/v2/pokemon";
+    const response = await this.$axios.get(`${URL}/${pokemonName}`);
+    // NOTEIMPORTANT: the data from the fetch has plenty of information: voici ce dont j'ai besoin:
+    // console.log(response);
+    const data = response.data;
+    console.log(data);
+
+    // j'ai besoin du chiffre d'identité (ID)
+    const id = data.id;
+    console.log(id);
+
+    // j'en ai besoin pour créer l'image particulière pour chaque pokemon. c'est bon que j'ai vu ce code. je me demandais pourquoi j'avais besoin de l'ID
+    const imgURL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+    this.imgURL = imgURL;
+
+    // des competences (abilities)
+    const pokemonAbilities = data.abilities;
+    console.log(pokemonAbilities);
+    this.abilities = pokemonAbilities.map(
+      (currentAbilityObj) => currentAbilityObj.ability.name
+    );
+    console.log(this.abilities);
+
+    //des gestes (moves)
+    const pokemonMoves = data.moves;
+    console.log(pokemonMoves);
+    this.moves = pokemonMoves
+      .slice(0, 20)
+      .map((currentMoveObj) => currentMoveObj.move.name);
+
+    // un type (ou des types) de chaque pokemon
+    const pokemonTypes = data.types;
+    this.types = pokemonTypes.map((currentTypeObj) => currentTypeObj.type.name);
+    console.log(this.types);
+
+    // les statistiques. ici il devienne plus compliqué, de plus parce que j'utilise chart.js pour afficher les données
+    const pokemonStats = data.stats;
+    this.stats = pokemonStats.map((currentStatsObj) => [
+      currentStatsObj.stat.name,
+      currentStatsObj.base_stat,
+    ]);
+    console.log(this.stats);
+    const statTypes = this.stats.map((currentStatsArr) => {
+      return currentStatsArr[0];
+    });
+    const statFigures = this.stats.map((currentStatsArr) => {
+      return currentStatsArr[1];
+    });
+    console.log(statTypes);
+    this.statTypes = statTypes;
+    console.log(statFigures);
+    this.statFigures = statFigures;
+
+    // création de chart.js
+    const chart = document.getElementById("pokeChart").getContext("2d");
+    let myChart = new Chart(chart, {
+      type: "doughnut", // apparently doughnut works fine
+      data: {
+        labels: this.statTypes,
+        datasets: [
+          {
+            data: this.statFigures,
+            backgroundColor: [
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 206, 86)",
+              "rgb(2, 100, 255)",
+              "rgb(235, 162, 189)",
+              "rgb(55, 206, 186)",
+            ],
+          },
+        ],
+      },
+      options: {
+        legend: {
+          labels: {
+            fontColor: "#FFF", // changing the colour of legend labels. PASS
+          },
+        },
+      },
+    });
+  },
+  // TESTING:
+  mounted() {
+    console.log(document);
+>>>>>>> parent of 322ec8a... j'ai pas fini, mais pour le soir, c'est terminé
   },
 };
 </script>
