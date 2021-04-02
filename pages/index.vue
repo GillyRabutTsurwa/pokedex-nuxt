@@ -21,9 +21,8 @@
     </div>
   </div>
 </template>
-
+ 
 <script>
-import axios from "@nuxtjs/axios";
 export default {
   data() {
     return {
