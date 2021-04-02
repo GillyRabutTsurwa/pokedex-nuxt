@@ -62,7 +62,6 @@
 import axios from "@nuxtjs/axios";
 import ColorThief from "colorthief";
 import Pokeball from "~/components/shared/Pokeball";
-
 export default {
   components: {
     Pokeball: Pokeball,
@@ -74,7 +73,6 @@ export default {
       moves: [],
       types: [],
       imgURL: "",
-
       stats: [],
       statTypes: [],
       statFigures: [],
@@ -86,7 +84,6 @@ export default {
       const colorThief = new ColorThief();
       const img = document.querySelector("#img");
       console.dir(img);
-
       if (img.complete) {
         // colorThief.getColor(img);
         console.log(colorThief.getPalette(img));
@@ -98,70 +95,54 @@ export default {
         colorThief.getColor(img);
       }
     },
-<<<<<<< HEAD
-
-    // renderAbilities(currentObj, x, y) {
-    //   return currentObj[x][y];
-    // },
-
     async renderPokemonData() {
       const pokemonName = this.$route.params.id;
       console.log(this.$route.params.id);
       const URL = "https://pokeapi.co/api/v2/pokemon";
       const response = await this.$axios.get(`${URL}/${pokemonName}`);
-
       const data = response.data;
       console.log(data);
-
       const id = data.id;
       console.log(id);
-
       const imgURL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
       this.imgURL = imgURL;
-
       const pokemonAbilities = data.abilities;
       console.log(pokemonAbilities);
       this.abilities = pokemonAbilities.map(
         (currentAbilityObj) => currentAbilityObj.ability.name
       );
-      // this.abilities = this.renderAbilities("ability", "name");
       console.log(this.abilities);
-
       const pokemonMoves = data.moves;
       console.log(pokemonMoves);
       this.moves = pokemonMoves
         .slice(0, 20)
         .map((currentMoveObj) => currentMoveObj.move.name);
-
       const pokemonTypes = data.types;
       this.types = pokemonTypes.map(
         (currentTypeObj) => currentTypeObj.type.name
       );
       console.log(this.types);
-
       const pokemonStats = data.stats;
       this.stats = pokemonStats.map((currentStatsObj) => [
         currentStatsObj.stat.name,
         currentStatsObj.base_stat,
       ]);
-
       console.log(this.stats);
+      //TESTING:
       const statTypes = this.stats.map((currentStatsArr) => {
         return currentStatsArr[0];
       });
-
       const statFigures = this.stats.map((currentStatsArr) => {
         return currentStatsArr[1];
       });
-
+      console.log(statTypes);
+      console.log(statFigures);
       console.log(statTypes);
       this.statTypes = statTypes;
       console.log(statFigures);
       this.statFigures = statFigures;
-
       this.createChart(statTypes, statFigures);
     },
-
     createChart(statTypes, statFigures) {
       const chart = document.getElementById("pokeChart").getContext("2d");
       let myChart = new Chart(chart, {
@@ -191,8 +172,6 @@ export default {
         },
       });
     },
-=======
->>>>>>> parent of 322ec8a... j'ai pas fini, mais pour le soir, c'est terminé
   },
   computed: {
     typeSubtitle() {
@@ -204,104 +183,11 @@ export default {
         : "Top Moves";
     },
   },
-  // NOTETODO: Too much code in this created hook. will need to refactor this and break code up into functions
-<<<<<<< HEAD
-  // async created() {
-  //   await this.renderPokemonData();
-  // },
-  async mounted() {
-    await this.renderPokemonData();
-=======
   async created() {
-    // NOTE: making an axios HTTP request for each single pokemon using its name (of which we are getting from Pokecard.vue as a route parametre)
-    const pokemonName = this.$route.params.id;
-    console.log(this.$route.params.id);
-    const URL = "https://pokeapi.co/api/v2/pokemon";
-    const response = await this.$axios.get(`${URL}/${pokemonName}`);
-    // NOTEIMPORTANT: the data from the fetch has plenty of information: voici ce dont j'ai besoin:
-    // console.log(response);
-    const data = response.data;
-    console.log(data);
-
-    // j'ai besoin du chiffre d'identité (ID)
-    const id = data.id;
-    console.log(id);
-
-    // j'en ai besoin pour créer l'image particulière pour chaque pokemon. c'est bon que j'ai vu ce code. je me demandais pourquoi j'avais besoin de l'ID
-    const imgURL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-    this.imgURL = imgURL;
-
-    // des competences (abilities)
-    const pokemonAbilities = data.abilities;
-    console.log(pokemonAbilities);
-    this.abilities = pokemonAbilities.map(
-      (currentAbilityObj) => currentAbilityObj.ability.name
-    );
-    console.log(this.abilities);
-
-    //des gestes (moves)
-    const pokemonMoves = data.moves;
-    console.log(pokemonMoves);
-    this.moves = pokemonMoves
-      .slice(0, 20)
-      .map((currentMoveObj) => currentMoveObj.move.name);
-
-    // un type (ou des types) de chaque pokemon
-    const pokemonTypes = data.types;
-    this.types = pokemonTypes.map((currentTypeObj) => currentTypeObj.type.name);
-    console.log(this.types);
-
-    // les statistiques. ici il devienne plus compliqué, de plus parce que j'utilise chart.js pour afficher les données
-    const pokemonStats = data.stats;
-    this.stats = pokemonStats.map((currentStatsObj) => [
-      currentStatsObj.stat.name,
-      currentStatsObj.base_stat,
-    ]);
-    console.log(this.stats);
-    const statTypes = this.stats.map((currentStatsArr) => {
-      return currentStatsArr[0];
-    });
-    const statFigures = this.stats.map((currentStatsArr) => {
-      return currentStatsArr[1];
-    });
-    console.log(statTypes);
-    this.statTypes = statTypes;
-    console.log(statFigures);
-    this.statFigures = statFigures;
-
-    // création de chart.js
-    const chart = document.getElementById("pokeChart").getContext("2d");
-    let myChart = new Chart(chart, {
-      type: "doughnut", // apparently doughnut works fine
-      data: {
-        labels: this.statTypes,
-        datasets: [
-          {
-            data: this.statFigures,
-            backgroundColor: [
-              "rgb(255, 99, 132)",
-              "rgb(54, 162, 235)",
-              "rgb(255, 206, 86)",
-              "rgb(2, 100, 255)",
-              "rgb(235, 162, 189)",
-              "rgb(55, 206, 186)",
-            ],
-          },
-        ],
-      },
-      options: {
-        legend: {
-          labels: {
-            fontColor: "#FFF", // changing the colour of legend labels. PASS
-          },
-        },
-      },
-    });
-  },
-  // TESTING:
-  mounted() {
-    console.log(document);
->>>>>>> parent of 322ec8a... j'ai pas fini, mais pour le soir, c'est terminé
+    console.time("test");
+    await this.renderPokemonData();
+    console.timeEnd("test");
+    console.log("GILBERT IS A BOSS");
   },
 };
 </script>
@@ -310,7 +196,6 @@ export default {
 .pokemon-image {
   width: 45rem;
   height: 45rem;
-
   img {
     width: 100%;
     height: 100%;
@@ -323,14 +208,13 @@ export default {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   row-gap: 1.5rem;
-
+  place-items: center;
   & [class*="title"] {
     text-transform: uppercase;
   }
   ul {
     list-style: none;
   }
-
   &__title {
     grid-column: 1 / -1;
     display: flex;
@@ -348,21 +232,17 @@ export default {
       top: 2rem;
       right: 2rem;
       transition: transform 0.5s ease;
-
       &:hover {
         transform: rotate(360deg);
       }
     }
   }
-
   &__types,
   &__ability {
     display: flex;
     align-items: center;
-
     ul {
       margin-left: 1rem;
-
       li {
         margin-right: 1rem;
         text-transform: uppercase;
@@ -371,7 +251,6 @@ export default {
       }
     }
   }
-
   &__types {
     grid-column: 1 / 2;
   }
@@ -384,16 +263,13 @@ export default {
   &__stats {
     //TESTING: grid rows aren't defined but let's see if it'll work
     // you can tell I have much to learn about css grid
-
     &--title {
       text-align: center;
     }
-
     .chart-container {
       width: 45rem;
       height: 45rem;
       margin: 0 auto;
-
       #pokeChart {
         // width: 45rem;
         // height: 45rem;
@@ -409,7 +285,6 @@ export default {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-
       li {
         margin-right: 1.5rem;
       }
