@@ -54,7 +54,7 @@ body {
 }
 
 .main {
-  height: 90vh;
+  height: 100vh;
   padding: 5rem 0;
 }
 
