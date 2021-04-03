@@ -1,5 +1,5 @@
 <template>
-  <div class="about-pokemon">
+  <div class="about-pokemon" v-bind:style="{backgroundColor: `rgb(${imgBackGroundClr})`, color: `rgb(${pageFontColourTest})`}">
     <div class="about-pokemon__title">
       <h2 class="about-pokemon__title--title">About {{name}}</h2>
       <div class="about-pokemon__title--back">
@@ -50,6 +50,7 @@
         </li>
       </ul>
     </div>
+    <!-- Je pourrais utiliser ce code plus tard, mais pas ici -->
     <!-- <div class="back">
       <nuxt-link v-bind:to="`/pokedex`" class="btn-back">
         <Pokeball />
@@ -77,6 +78,7 @@ export default {
       statTypes: [],
       statFigures: [],
       imgBackGroundClr: "",
+      pageFontColourTest: "",
     };
   },
   methods: {
@@ -89,8 +91,14 @@ export default {
         console.log(colorThief.getPalette(img));
         let primaryColour = colorThief.getPalette(img)[0];
         let primaryColourValue = primaryColour.join(",");
+
+        let fontColour = colorThief.getPalette(img)[2];
+        let fontColourValue = fontColour.join(",");
+
         this.imgBackGroundClr = primaryColourValue;
+        this.pageFontColourTest = fontColourValue;
         console.log(this.imgBackGroundClr);
+        console.log(this.pageFontColourTest);
       } else {
         colorThief.getColor(img);
       }
@@ -108,26 +116,20 @@ export default {
       this.imgURL = imgURL;
       const pokemonAbilities = data.abilities;
       console.log(pokemonAbilities);
-      this.abilities = pokemonAbilities.map(
-        (currentAbilityObj) => currentAbilityObj.ability.name
-      );
+      this.abilities = pokemonAbilities.map((currentAbilityObj) => currentAbilityObj.ability.name);
       console.log(this.abilities);
       const pokemonMoves = data.moves;
       console.log(pokemonMoves);
-      this.moves = pokemonMoves
-        .slice(0, 20)
-        .map((currentMoveObj) => currentMoveObj.move.name);
+      const pokemon20Moves = pokemonMoves.slice(0, 20);
+      this.moves = pokemon20Moves.map((currentMoveObj) => currentMoveObj.move.name);
+
       const pokemonTypes = data.types;
-      this.types = pokemonTypes.map(
-        (currentTypeObj) => currentTypeObj.type.name
-      );
+      this.types = pokemonTypes.map((currentTypeObj) => currentTypeObj.type.name);
       console.log(this.types);
       const pokemonStats = data.stats;
-      this.stats = pokemonStats.map((currentStatsObj) => [
-        currentStatsObj.stat.name,
-        currentStatsObj.base_stat,
-      ]);
-      console.log(this.stats);
+      this.stats = pokemonStats.map((currentStatsObj) => [currentStatsObj.stat.name, currentStatsObj.base_stat]);
+      console.log(pokemonStats);
+
       //TESTING:
       const statTypes = this.stats.map((currentStatsArr) => {
         return currentStatsArr[0];
@@ -135,12 +137,10 @@ export default {
       const statFigures = this.stats.map((currentStatsArr) => {
         return currentStatsArr[1];
       });
-      console.log(statTypes);
-      console.log(statFigures);
-      console.log(statTypes);
       this.statTypes = statTypes;
-      console.log(statFigures);
       this.statFigures = statFigures;
+
+      console.log(statTypes, statFigures);
       this.createChart(statTypes, statFigures);
     },
     createChart(statTypes, statFigures) {
@@ -166,7 +166,8 @@ export default {
         options: {
           legend: {
             labels: {
-              fontColor: "#FFF",
+              // fontColor: "#FFF",
+              fontColor: `rgb(${this.pageFontColourTest})`,
             },
           },
         },
@@ -178,9 +179,7 @@ export default {
       return this.types.length > 1 ? "Types" : "Type";
     },
     moveSubtitle() {
-      return this.moves.length >= 20
-        ? `Top ${this.moves.length} moves`
-        : "Top Moves";
+      return this.moves.length >= 20 ? `Top ${this.moves.length} moves` : "Top Moves";
     },
   },
   async created() {
@@ -202,9 +201,7 @@ export default {
   }
 }
 .about-pokemon {
-  color: aliceblue;
-  margin: 0 5rem;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   row-gap: 1.5rem;
