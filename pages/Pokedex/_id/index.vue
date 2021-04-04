@@ -182,7 +182,8 @@ export default {
       return this.moves.length >= 20 ? `Top ${this.moves.length} moves` : "Top Moves";
     },
   },
-  async created() {
+
+  async mounted() {
     console.time("test");
     await this.renderPokemonData();
     console.timeEnd("test");

@@ -26,9 +26,7 @@ export default {
   methods: {
     async promiseFunc(iterator) {
       try {
-        const response = await this.$axios.$get(
-          `https://pokeapi.co/api/v2/pokemon/${iterator}`
-        );
+        const response = await this.$axios.$get(`https://pokeapi.co/api/v2/pokemon/${iterator}`);
         return response;
       } catch (error) {
         console.log(error);

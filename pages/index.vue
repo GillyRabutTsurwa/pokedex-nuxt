@@ -41,9 +41,7 @@ export default {
     // },
     async promiseFunc(iterator) {
       try {
-        const data = await this.$axios.$get(
-          `https://pokeapi.co/api/v2/pokemon/${iterator}`
-        );
+        const data = await this.$axios.$get(`https://pokeapi.co/api/v2/pokemon/${iterator}`);
         const imageURL = data.sprites.other["official-artwork"].front_default;
         return imageURL;
       } catch (error) {
@@ -51,9 +49,7 @@ export default {
       }
     },
     generateRandomIndex() {
-      this.randomArrIndex = Math.floor(
-        Math.random() * this.pokemonImages.length + 1
-      );
+      this.randomArrIndex = Math.floor(Math.random() * this.pokemonImages.length + 1);
     },
     renderImages() {
       setInterval(this.generateRandomIndex, 3000);
@@ -62,6 +58,11 @@ export default {
   computed: {
     currentImg() {
       return this.pokemonImages[this.randomArrIndex];
+    },
+    // TESTING: vuex data
+    pokeImgs() {
+      console.log(this.$store);
+      return this.$store.getters["getPokemonImages"];
     },
   },
   async created() {
@@ -74,13 +75,12 @@ export default {
     this.loading = false;
 
     this.renderImages();
+    console.log(this.pokeImgs);
   },
-  //TESTING;
-  updated() {
-    console.log(`Value of timer: ${this.timer}`);
-    console.log(`Value of image index: ${this.randomArrIndex}`);
-    console.log(`Value of currentImg: ${this.currentImg}`);
-  },
+  // updated() {
+  //   console.log(`Value of image index: ${this.randomArrIndex}`);
+  //   console.log(`Value of currentImg: ${this.currentImg}`);
+  // },
 };
 </script>
 
