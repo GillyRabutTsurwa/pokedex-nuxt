@@ -196,7 +196,7 @@ export default {
     },
   },
 
-  async created() {
+  async mounted() {
     console.time("test");
     await this.renderPokemonData();
     console.timeEnd("test");
