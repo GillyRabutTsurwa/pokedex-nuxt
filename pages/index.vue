@@ -27,61 +27,56 @@ export default {
   data() {
     return {
       loading: null,
+      /**
+       * NOTE: pokemonImages should be empty, as we are not using it anymore
+       * instead, we are using the array from the vuex store as a getter
+       * QUESTION: do you know what a getter is?
+       * in our case, our getter simply returns the state, as is
+       * so techinically, we could access the state instead of the getter, and the outcome would be the same
+       *
+       * just to clarify, every occurence of pokeImgs(vuex state retrieved as a getter) used to be ones of pokemonImages(original state of this component/page)
+       */
       pokemonImages: [],
       randomArrIndex: 0,
-      // timer: null,
+      timer: 3000, // NOTE: in milliseconds. i finally found a way to use this variable
     };
   },
   methods: {
-    // generateRandomImage() {
-    //   let randomIndex = Math.floor(
-    //     Math.random() * this.pokemonImages.length + 1
-    //   );
-    //   return this.pokemonImages[randomIndex];
-    // },
-    async promiseFunc(iterator) {
-      try {
-        const data = await this.$axios.$get(`https://pokeapi.co/api/v2/pokemon/${iterator}`);
-        const imageURL = data.sprites.other["official-artwork"].front_default;
-        return imageURL;
-      } catch (error) {
-        console.log(error);
-      }
+    obtenirPokemonImages() {
+      /**
+       * NOTE:
+       * this code is responsible for fetching Pokemon from the API. i moved it from here to the store
+       * this is a very shallow explanation, but the code in store/index.js will make more sense upon being read and analysed
+       */
+      this.$store.dispatch("fetchPokemonImages");
     },
     generateRandomIndex() {
-      this.randomArrIndex = Math.floor(Math.random() * this.pokemonImages.length + 1);
+      this.randomArrIndex = Math.floor(
+        Math.random() * this.pokeImgs.length + 1
+      );
     },
     renderImages() {
-      setInterval(this.generateRandomIndex, 3000);
+      setInterval(this.generateRandomIndex, this.timer);
     },
   },
   computed: {
-    currentImg() {
-      return this.pokemonImages[this.randomArrIndex];
-    },
-    // TESTING: vuex data
     pokeImgs() {
-      console.log(this.$store);
-      return this.$store.getters["getPokemonImages"];
+      return this.$store.getters.getPokemonImages;
+    },
+    currentImg() {
+      // return this.pokemonImages[this.randomArrIndex];
+      return this.pokeImgs[this.randomArrIndex];
     },
   },
   async created() {
     this.loading = true;
-    const pokemonListLimit = 150;
-    for (let i = 1; i < pokemonListLimit; i++) {
-      this.pokemonImages.push(await this.promiseFunc(i));
-    }
-    console.dir(this.pokemonImages);
+    this.obtenirPokemonImages();
     this.loading = false;
 
     this.renderImages();
-    console.log(this.pokeImgs);
   },
-  // updated() {
-  //   console.log(`Value of image index: ${this.randomArrIndex}`);
-  //   console.log(`Value of currentImg: ${this.currentImg}`);
-  // },
 };
+// NOTE: finally, i got everything to work, a goo job dun
 </script>
 
 <style>

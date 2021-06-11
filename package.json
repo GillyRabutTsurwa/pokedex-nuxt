@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.0",
+    "axios": "^0.21.1",
     "colorthief": "^2.3.2",
-    "nuxt": "^2.14.0",
-    "vuex": "^3.6.2"
+    "nuxt": "^2.14.0"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.3",
@@ -23,5 +23,8 @@
     "node-sass": "^4.14.1",
     "sass-loader": "^10.0.2",
     "vue-jest": "^3.0.4"
+  },
+  "prettier": {
+    "arrowParens": "always"
   }
 }
