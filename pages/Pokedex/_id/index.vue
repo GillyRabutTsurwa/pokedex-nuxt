@@ -63,7 +63,6 @@
 import axios from "@nuxtjs/axios";
 import ColorThief from "colorthief";
 import Pokeball from "~/components/shared/Pokeball";
-
 export default {
   components: {
     Pokeball: Pokeball,
@@ -75,7 +74,6 @@ export default {
       moves: [],
       types: [],
       imgURL: "",
-
       stats: [],
       statTypes: [],
       statFigures: [],
@@ -88,7 +86,6 @@ export default {
       const colorThief = new ColorThief();
       const img = document.querySelector("#img");
       console.dir(img);
-
       if (img.complete) {
         // colorThief.getColor(img);
         console.log(colorThief.getPalette(img));
@@ -106,27 +103,21 @@ export default {
         colorThief.getColor(img);
       }
     },
-
     async renderPokemonData() {
       const pokemonName = this.$route.params.id;
       console.log(this.$route.params.id);
       const URL = "https://pokeapi.co/api/v2/pokemon";
       const response = await this.$axios.get(`${URL}/${pokemonName}`);
-
       const data = response.data;
       console.log(data);
-
       const id = data.id;
       console.log(id);
-
       const imgURL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
       this.imgURL = imgURL;
-
       const pokemonAbilities = data.abilities;
       console.log(pokemonAbilities);
       this.abilities = pokemonAbilities.map((currentAbilityObj) => currentAbilityObj.ability.name);
       console.log(this.abilities);
-
       const pokemonMoves = data.moves;
       console.log(pokemonMoves);
       const pokemon20Moves = pokemonMoves.slice(0, 20);
@@ -135,7 +126,6 @@ export default {
       const pokemonTypes = data.types;
       this.types = pokemonTypes.map((currentTypeObj) => currentTypeObj.type.name);
       console.log(this.types);
-
       const pokemonStats = data.stats;
       this.stats = pokemonStats.map((currentStatsObj) => [currentStatsObj.stat.name, currentStatsObj.base_stat]);
       console.log(pokemonStats);
@@ -144,18 +134,15 @@ export default {
       const statTypes = this.stats.map((currentStatsArr) => {
         return currentStatsArr[0];
       });
-
       const statFigures = this.stats.map((currentStatsArr) => {
         return currentStatsArr[1];
       });
-
       this.statTypes = statTypes;
       this.statFigures = statFigures;
 
       console.log(statTypes, statFigures);
       this.createChart(statTypes, statFigures);
     },
-
     createChart(statTypes, statFigures) {
       const chart = document.getElementById("pokeChart").getContext("2d");
       let myChart = new Chart(chart, {
@@ -209,7 +196,6 @@ export default {
 .pokemon-image {
   width: 45rem;
   height: 45rem;
-
   img {
     width: 100%;
     height: 100%;
@@ -221,14 +207,12 @@ export default {
   grid-template-columns: repeat(2, 1fr);
   row-gap: 1.5rem;
   place-items: center;
-
   & [class*="title"] {
     text-transform: uppercase;
   }
   ul {
     list-style: none;
   }
-
   &__title {
     grid-column: 1 / -1;
     display: flex;
@@ -246,21 +230,17 @@ export default {
       top: 2rem;
       right: 2rem;
       transition: transform 0.5s ease;
-
       &:hover {
         transform: rotate(360deg);
       }
     }
   }
-
   &__types,
   &__ability {
     display: flex;
     align-items: center;
-
     ul {
       margin-left: 1rem;
-
       li {
         margin-right: 1rem;
         text-transform: uppercase;
@@ -269,7 +249,6 @@ export default {
       }
     }
   }
-
   &__types {
     grid-column: 1 / 2;
   }
@@ -282,16 +261,13 @@ export default {
   &__stats {
     //TESTING: grid rows aren't defined but let's see if it'll work
     // you can tell I have much to learn about css grid
-
     &--title {
       text-align: center;
     }
-
     .chart-container {
       width: 45rem;
       height: 45rem;
       margin: 0 auto;
-
       #pokeChart {
         // width: 45rem;
         // height: 45rem;
@@ -307,7 +283,6 @@ export default {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-
       li {
         margin-right: 1.5rem;
       }
