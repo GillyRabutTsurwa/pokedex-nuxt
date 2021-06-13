@@ -1,13 +1,11 @@
 <template>
   <div v-bind:class="{'container-on-load': loading, 'container-after-load': !loading}" class="pokecard-container">
-    <!-- NEW: The pokeball spins while we're fetching Pokemon from the API -->
     <Pokeball v-if="loading" class="lg spinnin" />
-    <Pokecard v-else v-for="(currentPokemon, index) in pokemonList" v-bind:key="index" v-bind:pokemonObj="currentPokemon" />
+    <Pokecard v-for="(currentPokemon, index) in pokeData" v-bind:key="index" v-bind:pokemonObj="currentPokemon" />
   </div>
 </template>
 
 <script>
-import axios from "@nuxtjs/axios";
 import Pokeball from "~/components/shared/Pokeball";
 import Pokecard from "~/components/Pokecard";
 export default {
@@ -20,27 +18,24 @@ export default {
     return {
       pokemonList: [],
       //NEW:
-      loading: false,
+      loading: null,
     };
   },
-  methods: {
-    async promiseFunc(iterator) {
-      try {
-        const response = await this.$axios.$get(`https://pokeapi.co/api/v2/pokemon/${iterator}`);
-        return response;
-      } catch (error) {
-        console.log(error);
-      }
+  computed: {
+    pokeData() {
+      return this.$store.getters.getPokemonData;
     },
   },
-  async created() {
+  methods: {
+    obtenirPokemonData() {
+      this.$store.dispatch("fetchPokemonData");
+    },
+  },
+  mounted() {
     // NEW: loading is true as we're fetching the pokemon
     this.loading = true;
-    for (let i = 1; i <= 150; i++) {
-      this.pokemonList.push(await this.promiseFunc(i));
-    }
-    // console.log(this.pokemonList);
-    // //NOTE: after we've fethe all the pokemon, then we set loading to false, which will make the loader stop and the pokecards will render
+    this.obtenirPokemonData();
+    console.log(this.pokeData);
     this.loading = false;
   },
 };
