@@ -41,6 +41,15 @@ export default {
       timer: 3000, // NOTE: in milliseconds. i finally found a way to use this variable
     };
   },
+  computed: {
+    pokeImgs() {
+      return this.$store.getters.getPokemonImages;
+    },
+    currentImg() {
+      // return this.pokemonImages[this.randomArrIndex];
+      return this.pokeImgs[this.randomArrIndex];
+    },
+  },
   methods: {
     obtenirPokemonImages() {
       /**
@@ -59,21 +68,13 @@ export default {
       setInterval(this.generateRandomIndex, this.timer);
     },
   },
-  computed: {
-    pokeImgs() {
-      return this.$store.getters.getPokemonImages;
-    },
-    currentImg() {
-      // return this.pokemonImages[this.randomArrIndex];
-      return this.pokeImgs[this.randomArrIndex];
-    },
-  },
   async created() {
     this.loading = true;
     this.obtenirPokemonImages();
     this.loading = false;
 
     this.renderImages();
+    console.log(this.pokeImgs);
   },
 };
 // NOTE: finally, i got everything to work, a goo job dun

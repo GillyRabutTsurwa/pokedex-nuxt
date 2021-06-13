@@ -60,7 +60,6 @@
 </template>
 
 <script>
-import axios from "@nuxtjs/axios";
 import ColorThief from "colorthief";
 import Pokeball from "~/components/shared/Pokeball";
 
@@ -124,20 +123,29 @@ export default {
 
       const pokemonAbilities = data.abilities;
       console.log(pokemonAbilities);
-      this.abilities = pokemonAbilities.map((currentAbilityObj) => currentAbilityObj.ability.name);
+      this.abilities = pokemonAbilities.map(
+        (currentAbilityObj) => currentAbilityObj.ability.name
+      );
       console.log(this.abilities);
 
       const pokemonMoves = data.moves;
       console.log(pokemonMoves);
       const pokemon20Moves = pokemonMoves.slice(0, 20);
-      this.moves = pokemon20Moves.map((currentMoveObj) => currentMoveObj.move.name);
+      this.moves = pokemon20Moves.map(
+        (currentMoveObj) => currentMoveObj.move.name
+      );
 
       const pokemonTypes = data.types;
-      this.types = pokemonTypes.map((currentTypeObj) => currentTypeObj.type.name);
+      this.types = pokemonTypes.map(
+        (currentTypeObj) => currentTypeObj.type.name
+      );
       console.log(this.types);
 
       const pokemonStats = data.stats;
-      this.stats = pokemonStats.map((currentStatsObj) => [currentStatsObj.stat.name, currentStatsObj.base_stat]);
+      this.stats = pokemonStats.map((currentStatsObj) => [
+        currentStatsObj.stat.name,
+        currentStatsObj.base_stat,
+      ]);
       console.log(pokemonStats);
 
       //TESTING:
@@ -192,7 +200,9 @@ export default {
       return this.types.length > 1 ? "Types" : "Type";
     },
     moveSubtitle() {
-      return this.moves.length >= 20 ? `Top ${this.moves.length} moves` : "Top Moves";
+      return this.moves.length >= 20
+        ? `Top ${this.moves.length} moves`
+        : "Top Moves";
     },
   },
 
